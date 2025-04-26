@@ -1,103 +1,161 @@
-import Image from "next/image";
+// pages/index.tsx
+"use client";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import React from 'react';
+import TextComponent from '@/components/TextComponent';  // 引入 TextComponent
+import TextComponent2 from "@/components/TextComponent2";
+import ThreeDModel from '@/components/ThreeDModel'; // 导入3D模型组件
+import ImageComponent from '@/components/ImageComponent';
+import BackgroundComponent   from "@/components/BackgroundComponent";
+import ImageComponent2 from "@/components/ImageComponent2";
+import ImageComponent3 from "@/components/ImageComponent3";
+import ImageComponent4 from "@/components/ImageComponent4";
+import ImageComponent5 from "@/components/ImageComponent5";
+import MenuComponent from "@/components/MenuComponent";
+import {usePageBlurOpacity} from "@/hooks/usePageBlurOpacity";
+import TableComponent from "@/components/TableComponent";
+import ThreeDModel2 from "@/components/ThreeDModel2";
+import ThreeDModel3 from "@/components/ThreeDModel3";
+import ThreeDModel4 from "@/components/ThreeDModel4";
+import ThreeDModel5 from "@/components/ThreeDModel5";
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+const sections = [1, 2, 3, 4, 5];
+
+const Home = () => {
+    const { sectionRefs, blurAmounts, opacityAmounts } = usePageBlurOpacity(sections.length);
+
+    return (
+        <div className="h-screen w-screen bg-white relative ">
+            {/* 悬浮目录组件 */}
+            <MenuComponent />
+            {/* First Page */}
+            {sections.map((id, index) => (
+                <div
+                    key={id}
+                    id={`section-${id}`}
+                    ref={(el) => { sectionRefs.current[index] = el }}
+                    style={{
+                        filter: `blur(${blurAmounts[index]}px)`,
+                        opacity: opacityAmounts[index],
+                        transition: 'all 0.3s ease'
+                    }}
+                    className="h-screen w-full flex items-center justify-center border-b border-gray-300 relative">
+                    {id === 1 && (
+                        <>
+                            <BackgroundComponent backgroundImage="/images/bg1.png"/>
+
+                            {/* Centered TextComponent */}
+                            <div className="absolute top-25 left-80">
+                                <TextComponent text="Welcome, Mianzhimei！！！"/>
+                            </div>
+
+                            <div className="absolute top-25 left-280">
+                                <TextComponent2 text="sorry!"/>
+                            </div>
+
+                            <div className="absolute top-245 left-190">
+                                <TextComponent2 text="Mianzhimei is the best！！！"/>
+                            </div>
+
+                            {/* Top-left TextComponent */}
+                            <div className="absolute top-7 left-17 font-serif text-5xl">
+                                <TextComponent2 text="0-1"/>
+                            </div>
+
+                            <div className="absolute top-20 right-100 w-[100px] h-[100px]">
+                                <ImageComponent src="/images/cat1.jpg"/>
+                            </div>
+
+                            <div className="absolute top-210 right-380 w-[100px] h-[100px]">
+                                <ImageComponent2 src="/images/cat2.jpg"/>
+                            </div>
+
+                            <div className="absolute top-90 right-330 w-[100px] h-[100px]">
+                                <ImageComponent3 src="/images/mouse1.jpg"/>
+                            </div>
+
+                            <div className="absolute top-170 right-40 w-[100px] h-[100px]">
+                                <ImageComponent4 src="/images/mouse2.jpg"/>
+                            </div>
+
+                            <div className="absolute top-180 right-160 w-[100px] h-[100px]">
+                                <ImageComponent5 src="/images/mouse3.jpg"/>
+                            </div>
+
+
+                            {/* 右下角放置3D模型 */}
+                            <div className="items-center justify-center w-[450px] h-[450px] z-10">
+                                <ThreeDModel/>
+                            </div>
+                        </>
+                    )}
+                    {id === 2 && (
+                        <>
+                        {/* Second Page */}
+                            <div className="h-screen w-screen bg-white flex items-center justify-start overflow-auto">
+                                <TableComponent
+                                    rows={[
+                                        {title: '绵智美庄园 3605.3.3', detail: '今天又是辛勤工作的一天！'},
+                                        {title: '绵羊湾 3705.3.3', detail: '今天又是辛勤工作的一天！'},
+                                        {title: '绵智美宫殿 3815.3.3', detail: '今天又是辛勤工作的一天！'},
+                                        {title: '绵智美岛 3935.3.3', detail: '今天又是辛勤工作的一天！'},
+                                    ]}
+                                />
+                            </div>
+                            <div className="absolute top-7 left-17 font-serif text-5xl">
+                                <TextComponent2 text="0-2"/>
+                            </div>
+
+                            <div className="absolute top-1 left-280 w-[650px] h-[650px] z-10">
+                                <ThreeDModel2/>
+                            </div>
+
+                        </>
+                    )}
+                    {id === 3 && (
+                        <>
+                            <TextComponent text="这里放绵智美长官的丰功伟绩！"/>
+                            <div className="absolute top-7 left-17 font-serif text-5xl">
+                                <TextComponent2 text="0-3"/>
+                            </div>
+
+                            <div className="absolute top-10 left-10 w-[450px] h-[450px] z-10">
+                                <ThreeDModel3/>
+                            </div>
+                        </>
+                    )}
+                    {id === 4 && (
+                        <>
+                            <TextComponent text="这里也放绵智美长官的丰功伟绩！！！"/>
+                            <div className="absolute top-7 left-17 font-serif text-5xl">
+                                <TextComponent2 text="0-4"/>
+                            </div>
+
+                            <div className="absolute top-150 left-10 w-[350px] h-[350px] z-10">
+                                <ThreeDModel4/>
+                            </div>
+                        </>
+                    )}
+                    {id === 5 && (
+                        <>
+                            <TextComponent2
+                                text="Name：Mianzhimei！k
+                                          Address:Mianyangwan k
+                                          Tele.:666-6666-6666
+                                "/>
+                            <div className="absolute top-7 left-17 font-serif text-5xl">
+                                <TextComponent2 text="0-5"/>
+                            </div>
+
+                            <div className="absolute top-90 left-20 w-[550px] h-[550px] z-10">
+                                <ThreeDModel5/>
+                            </div>
+                        </>
+                    )}
+                </div>
+            ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
-}
+    );
+};
+
+export default Home;
